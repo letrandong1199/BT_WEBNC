@@ -1,14 +1,14 @@
 {
     "required": [
-        "first_name", "last_name"
+        "city", "country_id"
     ],
     "additionalProperties": true,
     "properties": {
-        "first_name": {
+        "city": {
             "type": "string"
         },
-        "last_name": {
-            "type": "string"
+        "country_id": {
+            "type": "integer"
         }
     }
 }

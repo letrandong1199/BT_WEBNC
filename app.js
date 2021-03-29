@@ -5,6 +5,10 @@ app.use(morgan('dev'));
 app.use(express.json());
 
 app.use('/api/actors', require('./routes/actor.route'));
+app.use('/api/categories', require('./routes/category.route'));
+app.use('/api/citys', require('./routes/city.route'));
+app.use('/api/countries', require('./routes/country.route'));
+
 
 app.get('/', (req, res) => {
     res.send("Hello Sakila...........")

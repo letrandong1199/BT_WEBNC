@@ -1,7 +1,6 @@
-const db = require('../utitil/db');
+const db = require('../util/db');
 module.exports = {
     all() {
-        console.log('haha');
         return db('actor');
     },
     async single(id) {
