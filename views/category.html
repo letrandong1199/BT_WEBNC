@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard Actor</title>
+    <title>Dashboard category</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
         integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.0/css/all.css">
@@ -19,8 +19,8 @@
     <div class="container mt-3">
         <div class="row">
             <div class="col-sm-12">
-                <button type="button" id="btnLoadActor" class="btn btn-outline-danger btn-lg btn-block">
-                    Load Actors
+                <button type="button" id="btnLoadCategory" class="btn btn-outline-danger btn-lg btn-block">
+                    Load Categories
                 </button>
             </div>
         </div>
@@ -28,25 +28,24 @@
             <div class="col-sm-12">
                 <div class="card">
                     <div class="card-header">
-                        <h3>Actor List From Sakira!!!</h3>
+                        <h3>Category List From Sakira!!!</h3>
                         <a id="add-button" class="btn btn-outline-success" role="button" data-toggle="modal"
                             data-target="#add-modal">
                             <i class="fa fa-plus" aria-hidden="true"></i>
-                            Add Actor
+                            Add Category
                         </a>
                     </div>
                     <div class="card-body">
-                        <table class="table" id="table-actor">
+                        <table class="table" id="table-category">
                             <thead>
                                 <tr>
                                     <th scope="col">ID</th>
-                                    <th scope="col">First Name</th>
-                                    <th scope="col">Last Name</th>
+                                    <th scope="col">Name</th>
                                     <th scope="col">Last Update</th>
                                     <th scope="col">Setting</th>
                                 </tr>
                             </thead>
-                            <tbody id="list-actor">
+                            <tbody id="list-category">
 
                             </tbody>
                         </table>
@@ -71,69 +70,65 @@
 
 
     <script>
-        $('#btnLoadActor').on('click', function () {
+        $('#btnLoadCategory').on('click', function () {
             $.ajax({
-                url: 'http://localhost:3000/api/actors',
+                url: 'http://localhost:3000/api/categories',
                 type: 'GET'
             }).done(function (data) {
                 let index = 0;
                 // console.log(data)
-                for (actor of data) {
+                for (category of data) {
                     var tr = ` 
             <tr>
-              <td>${actor.actor_id}</td>
-              <td>${actor.first_name}</td>
-              <td>${actor.last_name}</td>
-              <td>${actor.last_update}</td>
+              <td>${category.category_id}</td>
+              <td>${category.name}</td>
+              <td>${category.last_update}</td>
            `;
                     tr += `
                         <td class="text-center">
                           <a class="btn btn-primary" role="button" style="margin: 2px;"
-                          type="button" class="btn btn-primary" name="${index}" data-toggle="modal" data-target="#detail-modal" id="detail-button-${actor.actor_id}">
+                          type="button" class="btn btn-primary" name="${index}" data-toggle="modal" data-target="#detail-modal" id="detail-button-${category.category_id}">
                             <i class="far fa-eye"></i>
                           </a>
                           <a class="btn btn-success" role="button" style="background: rgb(11,171,56);margin: 2px;"
-                          type="button" class="btn btn-primary" name="${index}" data-toggle="modal" data-target="#edit-modal" id="edit-button-${actor.actor_id}">
+                          type="button" class="btn btn-primary" name="${index}" data-toggle="modal" data-target="#edit-modal" id="edit-button-${category.category_id}">
                             <i class="fas fa-pencil-alt"></i>
                           </a>
                           <a class="btn btn-danger" role="button" style="margin: 2px;"
-                          type="button" class="btn btn-primary" name="${index}" data-toggle="modal" data-target="#delete-modal" id="delete-button-${actor.actor_id}">
+                          type="button" class="btn btn-primary" name="${index}" data-toggle="modal" data-target="#delete-modal" id="delete-button-${category.category_id}">
                             <i class="fas fa-trash"></i>
                           </a>
                         </td>
                       </tr>`;
-                    $('#list-actor').append(tr);
+                    $('#list-category').append(tr);
                     index += 1;
 
 
-                    $('#detail-button-' + actor.actor_id).click((row) => {
-                        $('#detail-modal-actor-id').html(data[row.currentTarget.name].actor_id);
-                        $('#detail-modal-first-name').html(data[row.currentTarget.name].first_name);
-                        $('#detail-modal-last-name').html(data[row.currentTarget.name].last_name);
+                    $('#detail-button-' + category.category_id).click((row) => {
+                        $('#detail-modal-category-id').html(data[row.currentTarget.name].category_id);
+                        $('#detail-modal-name').html(data[row.currentTarget.name].name);
                         $('#detail-modal-last-update').html(data[row.currentTarget.name].last_update);
                     })
 
 
-                    $('#edit-button-' + actor.actor_id).click((row) => {
-                        $('#edit-modal-actor-id').html(data[row.currentTarget.name].actor_id);
-                        $('#edit-modal-first-name').attr('placeholder', (data[row.currentTarget.name].first_name)).blur();
-                        $('#edit-modal-last-name').attr('placeholder', (data[row.currentTarget.name].last_name)).blur();
+                    $('#edit-button-' + category.category_id).click((row) => {
+                        $('#edit-modal-category-id').html(data[row.currentTarget.name].category_id);
+                        $('#edit-modal-name').attr('placeholder', (data[row.currentTarget.name].name)).blur();
                         $('#edit-modal-last-update').html(data[row.currentTarget.name].last_update);
                     })
-                    $('#delete-button-' + actor.actor_id).click((row) => {
-                        $('#delete-modal-actor-id').html(data[row.currentTarget.name].actor_id);
+                    $('#delete-button-' + category.category_id).click((row) => {
+                        $('#delete-modal-category-id').html(data[row.currentTarget.name].category_id);
                     })
                 }
 
 
                 $('#btn-save-add').click(() => {
                     const dataToPost = {
-                        first_name: $('#add-modal-first-name').val(),
-                        last_name: $('#add-modal-last-name').val()
+                        name: $('#add-modal-name').val(),
                     };
                     const jsonToPost = JSON.stringify(dataToPost);
                     $.ajax({
-                        url: 'http://localhost:3000/api/actors',
+                        url: 'http://localhost:3000/api/categories',
                         data: jsonToPost,
                         dataType: 'json',
                         type: 'POST',
@@ -160,11 +155,10 @@
 
                 $('#btn-save-edit').click(() => {
                     const dataToPost = {
-                        actor_id: $('#edit-modal-actor-id').html(),
-                        first_name: $('#edit-modal-first-name').val() || $('#edit-modal-first-name').attr('placeholder'),
-                        last_name: $('#edit-modal-last-name').val() || $('#edit-modal-last-name').attr('placeholder')
+                        category_id: $('#edit-modal-category-id').html(),
+                        name: $('#edit-modal-name').val() || $('#edit-modal-name').attr('placeholder'),
                     };
-                    let url = 'http://localhost:3000/api/actors/actor/' + dataToPost.actor_id;
+                    let url = 'http://localhost:3000/api/categories/category/' + dataToPost.category_id;
                     const jsontoPost = JSON.stringify(dataToPost);
                     $.ajax({
                         url: url,
@@ -194,7 +188,7 @@
 
                 $('#btn-delete').click(() => {
                     $.ajax({
-                        url: 'http://localhost:3000/api/actors/actor/' + $('#delete-modal-actor-id').html(),
+                        url: 'http://localhost:3000/api/categories/category/' + $('#delete-modal-category-id').html(),
                         dataType: 'json',
                         type: 'DELETE',
                         contentType: 'application/json',
@@ -219,19 +213,19 @@
 
 
 
-                $('#table-actor').DataTable();
+                $('#table-category').DataTable();
 
             })
         })
 
     </script>
 
-    <!-- Add Actor -->
+    <!-- Add category -->
     <div class="modal fade" id="add-modal" role="dialog">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title" style="float: left; margin-top: 10px;">Add Actor</h4>
+                    <h4 class="modal-title" style="float: left; margin-top: 10px;">Add category</h4>
                     <button type="button" style="float: right; margin-top: 0px;" class="close"
                         data-dismiss="modal">&times;</button>
                 </div>
@@ -239,13 +233,7 @@
                     <div className="form-group">
                         <div className="form-control">
                             <p type="text" style="width:30%; font-weight:bold; display: inline-block;">First Name: </p>
-                            <input type="text" id="add-modal-first-name" style="display: inline-block; width: 50%;" />
-                        </div>
-                    </div>
-                    <div className="form-group">
-                        <div className="form-control">
-                            <p type="text" style="width:30%; font-weight:bold; display: inline-block;">Last Name: </p>
-                            <input type="text" id="add-modal-last-name" style="display: inline-block; width: 50%;" />
+                            <input type="text" id="add-modal-name" style="display: inline-block; width: 50%;" />
                         </div>
                     </div>
                 </div>
@@ -259,12 +247,12 @@
     </div>
 
 
-    <!-- Detail Actor -->
+    <!-- Detail category -->
     <div class="modal fade" id="detail-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Detail Actor</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Detail category</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -272,26 +260,20 @@
                 <div class="modal-body">
                     <div class="form-group">
                         <div class="form-control d-inline-flex">
-                            <label for="actorID">Actor ID : </label>
-                            <p class="ml-1 font-weight-bold" id="detail-modal-actor-id">actor_id</p>
+                            <label for="categoryID">category ID : </label>
+                            <p class="ml-1 font-weight-bold" id="detail-modal-category-id">category_id</p>
                         </div>
                     </div>
                     <div class="form-group">
                         <div class="form-control d-inline-flex">
-                            <label for="firstName">First Name : </label>
-                            <p class="ml-1 font-weight-bold" id="detail-modal-first-name">actor_id</p>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="form-control d-inline-flex">
-                            <label for="lastName">Last Name : </label>
-                            <p class="ml-1 font-weight-bold" id="detail-modal-last-name">actor_id</p>
+                            <label for="firstName">Name : </label>
+                            <p class="ml-1 font-weight-bold" id="detail-modal-name">category_id</p>
                         </div>
                     </div>
                     <div class="form-group">
                         <div class="form-control d-inline-flex">
                             <label for="lastUpdate">Last Update : </label>
-                            <p class="ml-1 font-weight-bold" id="detail-modal-last-update">actor_id</p>
+                            <p class="ml-1 font-weight-bold" id="detail-modal-last-update">category_id</p>
                         </div>
                     </div>
                 </div>
@@ -308,7 +290,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Edit Actor</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Edit category</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -316,20 +298,14 @@
                 <div class="modal-body">
                     <div class="form-group">
                         <div class="d-inline-flex">
-                            <label for="actorID">Actor ID : </label>
-                            <p class="ml-1 font-weight-bold" id="edit-modal-actor-id">actor_id</p>
+                            <label for="categoryID">category ID : </label>
+                            <p class="ml-1 font-weight-bold" id="edit-modal-category-id">category_id</p>
                         </div>
                     </div>
                     <div class="form-group">
                         <div class="d-inline-flex">
-                            <label for="firstName">First Name : </label>
-                            <input class="ml-1 font-weight-bold" id="edit-modal-first-name">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="d-inline-flex">
-                            <label for="lastName">Last Name : </label>
-                            <input class="ml-1 font-weight-bold" id="edit-modal-last-name">
+                            <label for="firstName">Name : </label>
+                            <input class="ml-1 font-weight-bold" id="edit-modal-name">
                         </div>
                     </div>
                     <div class="form-group">
@@ -353,7 +329,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title" style="float: left; margin-top: 10px;">Deleted Actor</h4>
+                    <h4 class="modal-title" style="float: left; margin-top: 10px;">Deleted category</h4>
                     <button type="button" style="float: right; margin-top: 0px;" class="close"
                         data-dismiss="modal">&times;</button>
                 </div>
@@ -362,9 +338,9 @@
                         <div className="form-control">
                             <div className="form-control">
                                 <p type="text" style="display: inline-block;">Do you really want to </p>
-                                <p type="text" style="font-weight:bold; display: inline-block;">Actor ID: </p>
+                                <p type="text" style="font-weight:bold; display: inline-block;">category ID: </p>
                                 <p type="text" style="font-weight:bold; display: inline-block;"
-                                    id="delete-modal-actor-id"></p>
+                                    id="delete-modal-category-id"></p>
                                 <p type="text" style="display: inline-block;">?</p>
                             </div>
                         </div>

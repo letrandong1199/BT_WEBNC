@@ -1,7 +1,9 @@
 const express = require('express');
 require('express-async-errors');
 const app = express();
-const cors = require('cors')
+const cors = require('cors');
+const path = require('path');
+app.use(express.static(path.join(__dirname, 'public')));
 
 
 app.use(cors());
@@ -16,9 +18,16 @@ app.use('/api/categories', require('./routes/category.route'));
 app.use('/api/cities', require('./routes/city.route'));
 app.use('/api/countries', require('./routes/country.route'));
 
-
+//app.use(express.static('views'));
+console.log(__dirname);
 app.get('/', (req, res) => {
-    res.send("Hello Sakila...........")
+    res.sendFile(__dirname + '/views/home.html');
+})
+app.get('/actor', (req, res) => {
+    res.sendFile(__dirname + '/views/actor.html');
+})
+app.get('/category', (req, res) => {
+    res.sendFile(__dirname + '/views/category.html');
 })
 
 app.get('/err', function (req, res) {

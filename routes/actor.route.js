@@ -34,8 +34,7 @@ router.put('/actor/:id', require('../middlewares/validate.mdw')(schema), async (
     if (id || 0) {
         const result = await actorModel.single(id);
         if (result == 0) {
-            return res.json({ message: "Id is not exist" })
-
+            return res.json({ message: "Id is not exist" }).end();
         }
     }
     const ret = await actorModel.update(id, update_actor);
